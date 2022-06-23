@@ -1,0 +1,50 @@
+﻿@model CAFE_MVC.Models.BAN
+
+@{
+    ViewBag.Title = "Chi tiết "+Model.TENBAN;
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+<div class="container-sm">
+    
+    <div class="card text-center">
+        <div class="card-header">
+            <h3>CHI TIẾT @Model.TENBAN.ToUpper()</h3>
+        </div>
+        <div class="card-body">
+            @if (Model.DATMONs.ToList().Count <= 0)
+            {
+                <h5 class="card-title d-inline-flex">TRẠNG THÁI:  <strong class="text-success">TRỐNG</strong>  </h5>
+            }
+            else
+            {
+                <h5 class="card-title">TRẠNG THÁI:  <strong class="text-danger">ĐANG DÙNG</strong>  </h5>
+            }
+            <h5 class="card-title">KHU VỰC: @Model.KHUVUC.TENKV</h5>
+        </div>
+       
+    </div>
+    <br />
+
+    @*<p>
+            @Html.ActionLink("Thêm món", "Create_datmon", "QLBan", new { id = Model.ID_BAN }, htmlAttributes: new { @class = "btn btn-primary" })
+        </p>*@
+
+    @Html.Partial("Details_part", Model.DATMONs)
+</div>
+
+    @*Html.ActionLink("THANH TOÁN", "payment","QLBan", new {id=Model.ID_BAN},htmlAttributes:new {@class="btn btn-danger "})*@
+
+    <p>
+        @Html.ActionLink("Quay lại", "Index")
+    </p>
+
+
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Dashboard")
+}

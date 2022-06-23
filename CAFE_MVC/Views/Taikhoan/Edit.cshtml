@@ -1,0 +1,73 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Đổi mật khẩu";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+@if (Session["ID_USER"] != null)
+{
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">ĐỔI MẬT KHẨU</h2>
+    </div>
+    <hr />
+    using (Html.BeginForm("Edit", "Taikhoan", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID_TK)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Mật khẩu mới </label>
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.PASS, new { htmlAttributes = new { @class = "", @id = "password1" } })
+                    @Html.ValidationMessageFor(model => model.PASS, "không được để trống", new { @class = "text-danger" })
+                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">xác nhận mật khẩu </label>
+                <div class="col-md-10">
+                    <input type="password" name="repass" id="password">
+                    @Html.ValidationMessageFor(model => model.PASS, "không được để trống", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="button" class="btnShow" value="Hiện" />
+                </div>
+                  
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
+            </div>
+
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back", "Details", "Taikhoan", new { id = Model.ID_TK }, htmlAttributes: new { })
+    </div>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Home")
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(".btnShow").mousedown(function () {
+        $("#password").attr("type", "text");
+        
+    });
+    $(".btnShow").on("mouseleave", function () {
+        $("#password").attr("type", "password");
+       
+    });
+
+</script>

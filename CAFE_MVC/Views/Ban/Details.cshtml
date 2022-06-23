@@ -1,0 +1,61 @@
+﻿@model CAFE_MVC.Models.BAN
+
+@{
+    ViewBag.Title = "Chi tiết "+Model.TENBAN;
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+@if (Session["ID_USER"] != null)
+{
+<div>
+    
+    <div class="alert alert-warning text-lg-center">
+        <h4 class="text-lg-center">CHI TIẾT @Model.TENBAN.ToUpper()</h4>
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tên bàn: @Model.TENBAN
+        </dt>
+        @if (Model.DATMONs.ToList().Count <= 0)
+        {
+            <dt>
+                Trạng thái: Trống
+            </dt>
+        }
+        else
+        {
+            <dt>
+                Trạng thái: Đang dùng
+            </dt>
+        }
+        <dt>
+            Tên khu vực: @Model.KHUVUC.TENKV
+        </dt>
+    </dl>
+</div>
+    <p>
+        @Html.ActionLink("Thêm món", "Create_datmon", "Ban", new { id = Model.ID_BAN }, htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+    <div class="container-sm">
+        @Html.Partial("Details_part", Model.DATMONs)
+    </div>
+    if (Model.DATMONs.ToList().Count > 0)
+    {
+    <div class="text-center">
+        @Html.ActionLink("THANH TOÁN", "payment", "Ban", new { id = Model.ID_BAN }, htmlAttributes: new { @class = "btn btn-danger " })
+    </div>
+    }
+
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Home")
+}

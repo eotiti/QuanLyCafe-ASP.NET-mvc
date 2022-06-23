@@ -1,0 +1,51 @@
+﻿@model CAFE_MVC.Models.KHUVUC
+
+@{
+    ViewBag.Title = "Cập nhật "+Model.TENKV;
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+    
+            <div class="alert alert-warning text-lg-center">
+                <h2 class="text-lg-center">CẬP NHẬT @Model.TENKV</h2>
+            </div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID_KV)
+
+            <div class="form-group">
+                <label class="control-label col-md-2">TÊN KHU VỰC</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TENKV, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TENKV, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Đổi tên" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @Html.Partial("Edit_part", Model.BANs.ToList())
+    @Html.ActionLink("Thêm bàn", "Create_ban", "QLKhuvuc", new { id = Model.ID_KV }, htmlAttributes: new { @class = "btn btn-primary" })
+    <br />
+    <br />
+    <div>
+        @Html.ActionLink("Quay lại", "Index")
+    </div>
+}
+else
+{
+    <p>Bạn chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập","Login", "Dashboard")
+}

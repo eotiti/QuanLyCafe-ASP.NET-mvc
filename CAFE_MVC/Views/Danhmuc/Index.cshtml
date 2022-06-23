@@ -1,0 +1,63 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.DANHMUCSP>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh mục ";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+@if (Session["ID_USER"] != null)
+{
+
+<div class="alert alert-primary text-lg-center">
+    <h2 class="text-lg-center">DANH MỤC MÓN</h2>
+</div>
+    <br />
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "Danhmuc", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="">
+                    <input type="text" name="search" class="form-control" placeholder="Tên danh mục">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <table class="table table-bordered bg-light">
+        <tr class="thead-dark">
+            <th>
+                TÊN DANH MỤC
+            </th>
+            <th>Tuỳ chọn</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TENDM)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.ID_DM })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+    <!-- Thêm mã phân trang -->
+
+    <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+    <div class="">
+        <h3> @Html.PagedListPager(Model, page => Url.Action("Index", "Danhmuc", new { page, search = Request.QueryString["search"] }))</h3>
+    </div>
+    <!-- Kết thúc -->
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Home")
+}

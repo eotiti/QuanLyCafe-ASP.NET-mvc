@@ -1,0 +1,59 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+
+    <div>
+        <h4>TAIKHOAN</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FULLNAME)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FULLNAME)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.USERNAME)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.USERNAME)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PASS)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PASS)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TYPE)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TYPE)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_TK }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đang nhập","Login","Dashboard")
+}
+

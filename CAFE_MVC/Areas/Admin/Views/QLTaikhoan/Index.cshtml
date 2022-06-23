@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CAFE_MVC.Models.TAIKHOAN>
+
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">CÁC TÀI KHOẢN HIỆN TẠI</h2>
+    </div>
+    <p>
+        @Html.ActionLink("Thêm tài khoản", "Register", "QLTaikhoan", htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+    <table class="table table-bordered bg-light">
+        <tr class="thead-dark">
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Chức vụ
+            </th>
+            <th>
+                Tuỳ chọn
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FULLNAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.USERNAME)
+                </td>
+                @if (item.TYPE.ToString() == "0")
+                {
+                    <td>
+                        Admin
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Nhân viên
+                    </td>
+                }
+                <td>
+                    @Html.ActionLink("Reset mật khẩu", "Resetpass", "QLTaikhoan", new { id = item.ID_TK }, htmlAttributes: new {})
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

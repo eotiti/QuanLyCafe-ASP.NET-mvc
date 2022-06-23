@@ -1,0 +1,45 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group form-inline">
+                        <label><strong>Username <br /></strong></label>
+                        @Html.TextBoxFor(m => m.USERNAME, null, new { @class = "form-control", @placeholder = "Email" })
+                    </div>
+                    <div class="form-group form-inline">
+                        <label><strong>Mật khẩu <br /></strong></label>
+                        @Html.PasswordFor(m => m.PASS, new { @class = "form-control", @placeholder = "Password", @id = "password" })
+                        <br />
+                        <input type="button" class="btnShow" value="Hiện" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-primary" value="Login" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(".btnShow").mousedown(function () {
+        $("#password").attr("type", "text");
+    });
+    $(".btnShow").on("mouseleave", function () {
+        $("#password").attr("type", "password");
+    });
+
+</script>
+

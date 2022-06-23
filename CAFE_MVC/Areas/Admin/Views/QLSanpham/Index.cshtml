@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.SANPHAM>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý món";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH MÓN ĂN</h2>
+    </div>
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "QLSanpham", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="">
+
+                    <input type="text" name="search" class="form-control" placeholder="Tên món">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <table class="table table-bordered bg-light">
+        <tr class="thead-dark">
+            <th>
+                Tên món
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Danh mục
+            </th>
+            <th>Tuỳ chọn</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TENSP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GIA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DANHMUCSP.TENDM)
+                </td>
+                <td>
+                    @Html.ActionLink("Cập nhật", "Edit", new { id = item.ID_SP }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.ID_SP })
+                </td>
+            </tr>
+        }
+    </table>
+    <p>
+        @Html.ActionLink("Thêm món mới", "Create", "QLSanpham", htmlAttributes: new { @class = "btn btn-primary" })
+    </p>
+    <!-- Thêm mã phân trang -->
+    <br />
+    <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+    <div class="">
+        <h3 style="padding:10px"> @Html.PagedListPager(Model, page => Url.Action("Index", "QLSanpham", new { page, search = Request.QueryString["search"] }))</h3>
+    </div>
+    <!-- Kết thúc -->
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Dashboard");
+}

@@ -1,0 +1,72 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Tạo tài khoản mới";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">TẠO TÀI KHOẢN MỚI</h2>
+    </div>
+
+    using (Html.BeginForm("Register", "QLTaikhoan", FormMethod.Post, htmlAttributes: new {@class="form-group bg-light align-center"}))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group form-inline ">
+            <label class="control-label col-md-2"> <strong>Họ và tên</strong></label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FULLNAME, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FULLNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group form-inline">
+            <label class="control-label col-md-2"> <strong>Tên đăng nhập</strong></label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group form-inline">
+            <label class="control-label col-md-2"> <strong>Mật khẩu</strong></label>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.PASS, new { htmlAttributes = new { @class = "form-control mx-sm-3" } })
+                @Html.ValidationMessageFor(model => model.PASS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group form-inline">
+            <label class="control-label col-md-2"><strong>Chức vụ</strong></label>
+            @Html.EditorFor(model => model.TYPE, new { htmlAttributes = new { @class = "form-control mx-sm-3" } })
+            @Html.ValidationMessageFor(model => model.TYPE, "", new { @class = "text-danger" })
+            <small id="passwordHelpInline" class="text-muted">
+                0:Admin | 1: Nhân viên
+            </small>
+        </div>
+
+        <div class="form-group  ">
+            <div class="col-md-offset-2 col-md-10 ">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+        <br />
+    </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+}
+else
+{
+    <p> Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}
+

@@ -1,0 +1,68 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Resetpass";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+
+    <div class="alert alert-warning text-lg-center">
+        <h2 class="text-lg-center">Đặt lại mật khẩu</h2>
+    </div>
+
+    <h3>BẠN CÓ MUỐN ĐẶT LẠI PASSWORD CỦA TÀI KHOẢN @Model.FULLNAME  ?</h3>
+    <div>
+        <h4>TAIKHOAN</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FULLNAME)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FULLNAME)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.USERNAME)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.USERNAME)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PASS)
+            </dt>
+
+            <dd>
+                @ViewBag.pass
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TYPE)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TYPE)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Đặt lại" class="btn btn-success" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập","Login","Dashboard")
+}

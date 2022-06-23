@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLCAFEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BAN">
+          <Key>
+            <PropertyRef Name="ID_BAN" />
+          </Key>
+          <Property Name="ID_BAN" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_KV" Type="int" />
+          <Property Name="TENBAN" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DANHMUCSP">
+          <Key>
+            <PropertyRef Name="ID_DM" />
+          </Key>
+          <Property Name="ID_DM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENDM" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DATMON">
+          <Key>
+            <PropertyRef Name="ID_HD" />
+          </Key>
+          <Property Name="ID_HD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_BAN" Type="int" />
+          <Property Name="ID_SP" Type="int" />
+          <Property Name="SOLUONG" Type="int" />
+          <Property Name="ID_TK" Type="int" />
+          <Property Name="NGAYLAP" Type="datetime" />
+          <Property Name="THANHTIEN" Type="float" />
+        </EntityType>
+        <EntityType Name="KHUVUC">
+          <Key>
+            <PropertyRef Name="ID_KV" />
+          </Key>
+          <Property Name="ID_KV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENKV" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="LICHSU">
+          <Key>
+            <PropertyRef Name="ID_LS" />
+          </Key>
+          <Property Name="ID_LS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENBAN" Type="nvarchar" MaxLength="50" />
+          <Property Name="TENSP" Type="nvarchar" MaxLength="50" />
+          <Property Name="SOLUONG" Type="int" />
+          <Property Name="NGAYLAP" Type="datetime" />
+          <Property Name="THANHTIEN" Type="float" />
+          <Property Name="FULLNAME" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NGUYENLIEU">
+          <Key>
+            <PropertyRef Name="ID_NL" />
+          </Key>
+          <Property Name="ID_NL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TENNL" Type="nvarchar" MaxLength="50" />
+          <Property Name="SLTON" Type="float" />
+        </EntityType>
+        <EntityType Name="SANPHAM">
+          <Key>
+            <PropertyRef Name="ID_SP" />
+          </Key>
+          <Property Name="ID_SP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_DM" Type="int" />
+          <Property Name="TENSP" Type="nvarchar" MaxLength="50" />
+          <Property Name="GIA" Type="float" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="ID_TK" />
+          </Key>
+          <Property Name="ID_TK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FULLNAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="20" />
+          <Property Name="PASS" Type="varchar(max)" />
+          <Property Name="TYPE" Type="int" />
+        </EntityType>
+        <Association Name="FK__BAN__ID_KV__38996AB5">
+          <End Role="KHUVUC" Type="Self.KHUVUC" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BAN" Type="Self.BAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHUVUC">
+              <PropertyRef Name="ID_KV" />
+            </Principal>
+            <Dependent Role="BAN">
+              <PropertyRef Name="ID_KV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATMON__ID_TK__2739D489">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="ID_TK" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_TK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__ID_BAN__47DBAE45">
+          <End Role="BAN" Type="Self.BAN" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BAN">
+              <PropertyRef Name="ID_BAN" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_BAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__ID_SP__14270015">
+          <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANPHAM">
+              <PropertyRef Name="ID_SP" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_SP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SANPHAM__ID_DM__4222D4EF">
+          <End Role="DANHMUCSP" Type="Self.DANHMUCSP" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DANHMUCSP">
+              <PropertyRef Name="ID_DM" />
+            </Principal>
+            <Dependent Role="SANPHAM">
+              <PropertyRef Name="ID_DM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLCAFEModelStoreContainer">
+          <EntitySet Name="BAN" EntityType="Self.BAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DANHMUCSP" EntityType="Self.DANHMUCSP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DATMON" EntityType="Self.DATMON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHUVUC" EntityType="Self.KHUVUC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LICHSU" EntityType="Self.LICHSU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NGUYENLIEU" EntityType="Self.NGUYENLIEU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SANPHAM" EntityType="Self.SANPHAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BAN__ID_KV__38996AB5" Association="Self.FK__BAN__ID_KV__38996AB5">
+            <End Role="KHUVUC" EntitySet="KHUVUC" />
+            <End Role="BAN" EntitySet="BAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATMON__ID_TK__2739D489" Association="Self.FK__DATMON__ID_TK__2739D489">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="DATMON" EntitySet="DATMON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__ID_BAN__47DBAE45" Association="Self.FK__HOADON__ID_BAN__47DBAE45">
+            <End Role="BAN" EntitySet="BAN" />
+            <End Role="DATMON" EntitySet="DATMON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__ID_SP__14270015" Association="Self.FK__HOADON__ID_SP__14270015">
+            <End Role="SANPHAM" EntitySet="SANPHAM" />
+            <End Role="DATMON" EntitySet="DATMON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SANPHAM__ID_DM__4222D4EF" Association="Self.FK__SANPHAM__ID_DM__4222D4EF">
+            <End Role="DANHMUCSP" EntitySet="DANHMUCSP" />
+            <End Role="SANPHAM" EntitySet="SANPHAM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLCAFEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BAN">
+          <Key>
+            <PropertyRef Name="ID_BAN" />
+          </Key>
+          <Property Name="ID_BAN" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_KV" Type="Int32" />
+          <Property Name="TENBAN" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KHUVUC" Relationship="Self.FK__BAN__ID_KV__38996AB5" FromRole="BAN" ToRole="KHUVUC" />
+          <NavigationProperty Name="DATMONs" Relationship="Self.FK__HOADON__ID_BAN__47DBAE45" FromRole="BAN" ToRole="DATMON" />
+        </EntityType>
+        <EntityType Name="DANHMUCSP">
+          <Key>
+            <PropertyRef Name="ID_DM" />
+          </Key>
+          <Property Name="ID_DM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENDM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SANPHAMs" Relationship="Self.FK__SANPHAM__ID_DM__4222D4EF" FromRole="DANHMUCSP" ToRole="SANPHAM" />
+        </EntityType>
+        <EntityType Name="DATMON">
+          <Key>
+            <PropertyRef Name="ID_HD" />
+          </Key>
+          <Property Name="ID_HD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_BAN" Type="Int32" />
+          <Property Name="ID_SP" Type="Int32" />
+          <Property Name="SOLUONG" Type="Int32" />
+          <Property Name="ID_TK" Type="Int32" />
+          <Property Name="NGAYLAP" Type="DateTime" Precision="3" />
+          <Property Name="THANHTIEN" Type="Double" />
+          <NavigationProperty Name="BAN" Relationship="Self.FK__HOADON__ID_BAN__47DBAE45" FromRole="DATMON" ToRole="BAN" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK__DATMON__ID_TK__2739D489" FromRole="DATMON" ToRole="TAIKHOAN" />
+          <NavigationProperty Name="SANPHAM" Relationship="Self.FK__HOADON__ID_SP__14270015" FromRole="DATMON" ToRole="SANPHAM" />
+        </EntityType>
+        <EntityType Name="KHUVUC">
+          <Key>
+            <PropertyRef Name="ID_KV" />
+          </Key>
+          <Property Name="ID_KV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENKV" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BANs" Relationship="Self.FK__BAN__ID_KV__38996AB5" FromRole="KHUVUC" ToRole="BAN" />
+        </EntityType>
+        <EntityType Name="LICHSU">
+          <Key>
+            <PropertyRef Name="ID_LS" />
+          </Key>
+          <Property Name="ID_LS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENBAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TENSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SOLUONG" Type="Int32" />
+          <Property Name="NGAYLAP" Type="DateTime" Precision="3" />
+          <Property Name="THANHTIEN" Type="Double" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="NGUYENLIEU">
+          <Key>
+            <PropertyRef Name="ID_NL" />
+          </Key>
+          <Property Name="ID_NL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TENNL" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SLTON" Type="Double" />
+        </EntityType>
+        <EntityType Name="SANPHAM">
+          <Key>
+            <PropertyRef Name="ID_SP" />
+          </Key>
+          <Property Name="ID_SP" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_DM" Type="Int32" />
+          <Property Name="TENSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GIA" Type="Double" />
+          <NavigationProperty Name="DANHMUCSP" Relationship="Self.FK__SANPHAM__ID_DM__4222D4EF" FromRole="SANPHAM" ToRole="DANHMUCSP" />
+          <NavigationProperty Name="DATMONs" Relationship="Self.FK__HOADON__ID_SP__14270015" FromRole="SANPHAM" ToRole="DATMON" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="ID_TK" />
+          </Key>
+          <Property Name="ID_TK" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FULLNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USERNAME" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PASS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TYPE" Type="Int32" />
+          <NavigationProperty Name="DATMONs" Relationship="Self.FK__DATMON__ID_TK__2739D489" FromRole="TAIKHOAN" ToRole="DATMON" />
+        </EntityType>
+        <Association Name="FK__BAN__ID_KV__38996AB5">
+          <End Role="KHUVUC" Type="Self.KHUVUC" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="BAN" Type="Self.BAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHUVUC">
+              <PropertyRef Name="ID_KV" />
+            </Principal>
+            <Dependent Role="BAN">
+              <PropertyRef Name="ID_KV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__ID_BAN__47DBAE45">
+          <End Role="BAN" Type="Self.BAN" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BAN">
+              <PropertyRef Name="ID_BAN" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_BAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SANPHAM__ID_DM__4222D4EF">
+          <End Role="DANHMUCSP" Type="Self.DANHMUCSP" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DANHMUCSP">
+              <PropertyRef Name="ID_DM" />
+            </Principal>
+            <Dependent Role="SANPHAM">
+              <PropertyRef Name="ID_DM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATMON__ID_TK__2739D489">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="ID_TK" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_TK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__ID_SP__14270015">
+          <End Role="SANPHAM" Type="Self.SANPHAM" Multiplicity="0..1" />
+          <End Role="DATMON" Type="Self.DATMON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANPHAM">
+              <PropertyRef Name="ID_SP" />
+            </Principal>
+            <Dependent Role="DATMON">
+              <PropertyRef Name="ID_SP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLCAFEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BANs" EntityType="Self.BAN" />
+          <EntitySet Name="DANHMUCSPs" EntityType="Self.DANHMUCSP" />
+          <EntitySet Name="DATMONs" EntityType="Self.DATMON" />
+          <EntitySet Name="KHUVUCs" EntityType="Self.KHUVUC" />
+          <EntitySet Name="LICHSUs" EntityType="Self.LICHSU" />
+          <EntitySet Name="NGUYENLIEUx" EntityType="Self.NGUYENLIEU" />
+          <EntitySet Name="SANPHAMs" EntityType="Self.SANPHAM" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <AssociationSet Name="FK__BAN__ID_KV__38996AB5" Association="Self.FK__BAN__ID_KV__38996AB5">
+            <End Role="KHUVUC" EntitySet="KHUVUCs" />
+            <End Role="BAN" EntitySet="BANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__ID_BAN__47DBAE45" Association="Self.FK__HOADON__ID_BAN__47DBAE45">
+            <End Role="BAN" EntitySet="BANs" />
+            <End Role="DATMON" EntitySet="DATMONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SANPHAM__ID_DM__4222D4EF" Association="Self.FK__SANPHAM__ID_DM__4222D4EF">
+            <End Role="DANHMUCSP" EntitySet="DANHMUCSPs" />
+            <End Role="SANPHAM" EntitySet="SANPHAMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATMON__ID_TK__2739D489" Association="Self.FK__DATMON__ID_TK__2739D489">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="DATMON" EntitySet="DATMONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__ID_SP__14270015" Association="Self.FK__HOADON__ID_SP__14270015">
+            <End Role="SANPHAM" EntitySet="SANPHAMs" />
+            <End Role="DATMON" EntitySet="DATMONs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLCAFEModelStoreContainer" CdmEntityContainer="QLCAFEEntities">
+          <EntitySetMapping Name="BANs">
+            <EntityTypeMapping TypeName="QLCAFEModel.BAN">
+              <MappingFragment StoreEntitySet="BAN">
+                <ScalarProperty Name="ID_BAN" ColumnName="ID_BAN" />
+                <ScalarProperty Name="ID_KV" ColumnName="ID_KV" />
+                <ScalarProperty Name="TENBAN" ColumnName="TENBAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DANHMUCSPs">
+            <EntityTypeMapping TypeName="QLCAFEModel.DANHMUCSP">
+              <MappingFragment StoreEntitySet="DANHMUCSP">
+                <ScalarProperty Name="ID_DM" ColumnName="ID_DM" />
+                <ScalarProperty Name="TENDM" ColumnName="TENDM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DATMONs">
+            <EntityTypeMapping TypeName="QLCAFEModel.DATMON">
+              <MappingFragment StoreEntitySet="DATMON">
+                <ScalarProperty Name="ID_HD" ColumnName="ID_HD" />
+                <ScalarProperty Name="ID_BAN" ColumnName="ID_BAN" />
+                <ScalarProperty Name="ID_SP" ColumnName="ID_SP" />
+                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="ID_TK" ColumnName="ID_TK" />
+                <ScalarProperty Name="NGAYLAP" ColumnName="NGAYLAP" />
+                <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHUVUCs">
+            <EntityTypeMapping TypeName="QLCAFEModel.KHUVUC">
+              <MappingFragment StoreEntitySet="KHUVUC">
+                <ScalarProperty Name="ID_KV" ColumnName="ID_KV" />
+                <ScalarProperty Name="TENKV" ColumnName="TENKV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LICHSUs">
+            <EntityTypeMapping TypeName="QLCAFEModel.LICHSU">
+              <MappingFragment StoreEntitySet="LICHSU">
+                <ScalarProperty Name="ID_LS" ColumnName="ID_LS" />
+                <ScalarProperty Name="TENBAN" ColumnName="TENBAN" />
+                <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="NGAYLAP" ColumnName="NGAYLAP" />
+                <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NGUYENLIEUx">
+            <EntityTypeMapping TypeName="QLCAFEModel.NGUYENLIEU">
+              <MappingFragment StoreEntitySet="NGUYENLIEU">
+                <ScalarProperty Name="ID_NL" ColumnName="ID_NL" />
+                <ScalarProperty Name="TENNL" ColumnName="TENNL" />
+                <ScalarProperty Name="SLTON" ColumnName="SLTON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SANPHAMs">
+            <EntityTypeMapping TypeName="QLCAFEModel.SANPHAM">
+              <MappingFragment StoreEntitySet="SANPHAM">
+                <ScalarProperty Name="ID_SP" ColumnName="ID_SP" />
+                <ScalarProperty Name="ID_DM" ColumnName="ID_DM" />
+                <ScalarProperty Name="TENSP" ColumnName="TENSP" />
+                <ScalarProperty Name="GIA" ColumnName="GIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="QLCAFEModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="ID_TK" ColumnName="ID_TK" />
+                <ScalarProperty Name="FULLNAME" ColumnName="FULLNAME" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASS" ColumnName="PASS" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

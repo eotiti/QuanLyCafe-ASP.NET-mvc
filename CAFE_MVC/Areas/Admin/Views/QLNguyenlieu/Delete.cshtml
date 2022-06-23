@@ -1,0 +1,39 @@
+﻿@model CAFE_MVC.Models.NGUYENLIEU
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <div class="alert alert-danger text-center" role="alert">
+        <h3>Bạn muốn xoá @Model.TENNL ?</h3>
+    </div>
+    
+    <div>
+        <div class="card">
+            <h5 class="card-header"></h5>
+            <div class="card-body">
+                <h5 class="card-title">TÊN NGUYÊN LIỆU: @Model.TENNL</h5>
+                <p class="card-text">SỐ LƯỢNG: @Model.SLTON KG</p>
+
+            </div>
+        </div>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color text-center">
+                <input type="submit" value="XÁC NHẬN XOÁ" class="btn btn-success" />
+
+            </div>
+            @Html.ActionLink("Back to List", "Index")
+        }
+    </div>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

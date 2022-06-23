@@ -1,0 +1,68 @@
+﻿@model CAFE_MVC.Models.QLCAFEEntities
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+
+    <div class="list-group list-group-horizontal ">
+        <a href="~/Admin/QLKhuvuc/Index" class="list-group-item list-group-item-action list-group-item-success" style="padding:5px">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">QUẢN LÝ KHU VỰC</h5>
+                <small class="text-muted"></small>
+            </div>
+            <br />
+            <br />
+            <p class="mb-1">Quản lý khu vực và các bàn thuộc trong một khu vực</p>
+            <small class="text-muted"></small>
+        </a>
+        <a href="~/Admin/QLBan/Index" class="list-group-item list-group-item-action list-group-item-warning" style="padding:5px">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">QUẢN LÝ SỐ BÀN</h5>
+                <small class="text-muted"></small>
+            </div>
+            <br />
+            <br />
+            <p class="mb-1">Quản lý các bàn hiện có và thông tin bàn</p>
+            <small class="text-muted"></small>
+        </a>
+        <a href="~/Admin/QLDanhmuc/Index" class="list-group-item list-group-item-action list-group-item-danger" style="padding:5px">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">QUẢN LÝ DANH MỤC</h5>
+                <small class="text-muted"> </small>
+            </div>
+            <br />
+            <br />
+            <p class="mb-1">Quản lý danh mục các món ăn</p>
+            <small class="text-muted"></small>
+        </a>
+        <a href="~/Admin/QLSanpham/Index" class="list-group-item list-group-item-action list-group-item-info" style="padding:5px">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">QUẢN LÝ MENU MÓN ĂN</h5>
+                <small class="text-muted"></small>
+            </div>
+            <br />
+            <br />
+            <p class="mb-2 text-black">Quản lý danh sách các món ăn và thức uống</p>
+            <small class="text-muted"></small>
+        </a>
+    </div>
+    <br />
+    <div class="jumbotron">
+        <h1 class="display-4 text-center text-danger">CHÀO MỪNG <strong class="text-success">@Session["FULLNAME"].ToString().ToUpper()</strong> TỚI TRANG QUẢN TRỊ</h1>
+        <p class="lead text-center">ĐÂY LÀ ỨNG DỤNG QUẢN LÝ QUÁN CAFE , ĐƯỢC PHÁT TRIỂN TRÊN NỀN TẢNG ASP.NET MVC</p>
+        <hr class="my-4 text-center">
+        <p class="text-center">ỨNG DỤNG ĐƯỢC RA ĐỜI ĐỂ QUẢN LÝ KINH DOANH CỦA QUÁN CAFE VỪA VÀ NHỎ</p>
+
+    </div>
+
+
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}
+

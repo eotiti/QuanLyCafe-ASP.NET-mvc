@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CAFE_MVC.Models.DANHMUCSP>
+
+@{
+    ViewBag.Title = "Quản lý danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{   
+<div class="container-sm">
+    
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH MỤC MÓN</h2>
+    </div>
+    <br />
+    @if (Model.ToList().Count > 0)
+    {
+
+        <table class="table table-bordered bg-light text-center">
+            <tr class="thead-dark">
+                <th>
+                    TÊN DANH MỤC
+                </th>
+                <th>Tuỳ chỉnh</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TENDM)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Cập nhật", "Edit", new { id = item.ID_DM }) |
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.ID_DM })
+                    </td>
+                </tr>
+            }
+        </table>
+
+    }
+    else
+    {
+        <h3>Trống</h3>
+    }
+    <br />
+    <p class="text-center">
+        @Html.ActionLink("THÊM DANH MỤC MỚI", "Create", "QLDanhmuc", htmlAttributes: new { @class = "btn btn-primary " })
+    </p>
+</div>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

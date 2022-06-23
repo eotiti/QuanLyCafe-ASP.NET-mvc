@@ -1,0 +1,110 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Public/dashboard/dashboard.css" rel="stylesheet" />
+    <link href="~/Public/pagination/pagination.css" rel="stylesheet" />
+    <script src="~/Public/dashboard/dashboard.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body style="padding:1px">
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+        @Html.ActionLink("QUẢN LÝ QUÁN CAFE", "Index", "Dashboard", new { Area = "Admin" }, htmlAttributes: new { @class = "navbar-brand col-md-3 col-lg-2 mr-0 px-3" })
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav px-3">
+            @if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+            {
+                <li class="nav-item text-nowrap">
+                </li>
+ }
+            else
+            {
+                <li class="nav-item text-nowrap">
+                    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Dashboard", new { Area = "Admin" }, htmlAttributes: new { @class = "nav-link" })
+                </li>
+            }
+
+        </ul>
+    </nav>
+    
+    
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse ">
+                <div class="sidebar-sticky pt-3 ">
+                    <ul class="nav flex-column">
+                        @if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+                        {
+                            <li class="nav-item badge-info">
+                                <p class="nav-link active active text-light">
+                                    Xin chào: @Session["FULLNAME"]
+                                </p>
+                            </li>
+                            <li class="nav-item badge-light">
+                                <a href="~/Home/" class="nav-link active active text-dark">
+                                    Về trang chính
+                                </a>
+                            </li>
+                            <li><br></li>
+                            
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý Khu vực", "Index", "QLKhuvuc", new { Area = "Admin" }, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý bàn", "Index", "QLBan", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý Món ăn", "Index", "QLSanpham", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý Danh mục", "Index", "QLDanhmuc", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Xem lịch sử thanh toán", "Index", "QLLichsu", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý Nguyên liệu", "Index", "QLNguyenlieu", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li class="nav-item badge-secondary">
+                                @Html.ActionLink("Quản lý Tài khoản", "Index", "QLTaikhoan", null, htmlAttributes: new { @class = "nav-link active text-light" })
+                            </li>
+                            <li><br /></li>
+                            <li class="nav-item d-inline-flex ">
+                                <p class="text-center">@Html.ActionLink("ĐĂNG XUẤT", "Logout", "Dashboard", null, htmlAttributes: new { @class = "nav-link active bg-light text-danger" })</p>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+            
+          
+            <!--MAIN-->
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:lightgray">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"></h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            
+
+                        </div>
+                    </div>
+                </div>
+                <!--===CONTENT===-->
+                @RenderBody()
+                <!--==============-->
+            </main>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CAFE_MVC.Models.NGUYENLIEU>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if(Session["ID_USER"]!=null && Session["TYPE"].ToString()=="0")
+{   
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH NGUYÊN LIỆU TRONG KHO</h2>
+    </div>
+    <p>
+        @Html.ActionLink("Thêm NL mới", "Create","QLNguyenlieu",htmlAttributes:new {@class="btn btn-primary"})
+    </p>
+    <table class="table table-bordered bg-light">
+        <tr class="thead-dark">
+            <th>
+                Tên nguyên liệu
+            </th>
+            <th>
+                Số lượng tồn
+            </th>
+            <th>Tuỳ chọn</th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TENNL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SLTON) Đơn vị
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id=item.ID_NL }) |
+                @Html.ActionLink("Xoá", "Delete", new { id=item.ID_NL })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập","Login","Dashboard")
+}

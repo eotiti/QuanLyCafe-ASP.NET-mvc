@@ -1,0 +1,53 @@
+﻿@model CAFE_MVC.Models.TAIKHOAN
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+@if (Session["ID_USER"] != null)
+{
+    <h2>Trang cá nhân</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FULLNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.USERNAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PASS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TYPE)
+            </th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.FULLNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.USERNAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.PASS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.TYPE)
+            </td>
+            <td>
+                @Html.ActionLink("Cập nhật", "Edit", new { id = Model.ID_TK }) |
+                @Html.ActionLink("Details", "Details", new { id = Model.ID_TK }) |
+                @Html.ActionLink("Xoá tài khoản", "Delete", new { id = Model.ID_TK })
+            </td>
+        </tr>
+    </table>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập","Login","Home")
+}

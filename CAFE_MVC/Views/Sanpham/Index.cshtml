@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.SANPHAM>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh sách món";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+@if (Session["ID_USER"] != null)
+{
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH MÓN</h2>
+    </div>
+    if (Model.Count != 0)
+    {
+        <div class="container-sm">
+            @using (Html.BeginForm("Index", "Sanpham", FormMethod.Get))
+            {
+                <div class="row">
+                    <div class="">
+
+                        <input type="text" name="search" class="form-control" placeholder="Tên món....">
+                    </div>
+                    <div class="">
+                        <input type="submit" name="submit" class="form-control" value="search">
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        <table class="table table-bordered bg-light">
+            <tr class="thead-dark">
+                <th>
+                    Tên món
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Danh mục
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TENSP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GIA) VNĐ
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DANHMUCSP.TENDM)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <!-- Thêm mã phân trang -->
+
+        <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+        <div class="">
+            <h3> @Html.PagedListPager(Model, page => Url.Action("Index", "Sanpham", new { page, search = Request.QueryString["search"] }))</h3>
+        </div>
+        <!-- Kết thúc -->
+    }
+    else
+    {
+        <p>Trống</p>
+    }
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Home")
+}

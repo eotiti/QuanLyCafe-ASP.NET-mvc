@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.BAN>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Quản lý bàn";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH BÀN</h2>
+    </div>
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "QLBan", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="">
+
+                    <input type="text" name="search" class="form-control" placeholder="Tên bàn">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control bg-success text-light" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    
+    @Html.ActionLink("Thêm bàn", "Create", "QLBan", htmlAttributes: new { @class = "btn btn-primary float-right" })
+    <br />
+    <br />
+    if (Model.ToList().Count > 0)
+    {
+        <div class="row row-cols-3 row-cols-md-4">
+
+            @foreach (var item in Model)
+            {
+                if (item.DATMONs.ToList().Count <= 0)
+                {
+                    <div class="col mb-4">
+                        <div class="card border-success">
+                            <div class="card-body border-success" style="background-color: #77f641">
+                                <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                <br />
+                                @if (item.KHUVUC.TENKV.ToString() == null)
+                                {
+                                    <p>Không có khu vực</p>
+                                }
+                                else
+                                {
+                                    <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                }
+
+                                <h5 class="card-text">Trạng thái: <strong class="text-success">Trống</strong></h5>
+                                @Html.ActionLink("Sửa", "Edit", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-secondary" })
+                                @Html.ActionLink("Xem", "Details", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                                @Html.ActionLink("Xoá", "Delete", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-danger" })
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col mb-4">
+                        <div class="card border-danger">
+                            <div class="card-body border-danger" style="background-color:#f86865">
+                                <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                <br />
+                                @if (item.KHUVUC.TENKV.ToString() == null)
+                                {
+                                    <p>Không có khu vực</p>
+                                }
+                                else
+                                {
+                                    <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                }
+
+                                <h5 class="card-text">Trạng thái: <strong class="text-danger">Đang dùng</strong></h5>
+                                @Html.ActionLink("Xem", "Details", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <!-- Thêm mã phân trang -->
+       
+        
+        <div class="">
+            <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+            <h3 style="padding:10px"> @Html.PagedListPager(Model, page => Url.Action("Index", "QLBan", new { page, search = Request.QueryString["search"] }))</h3>
+        </div>
+        <!-- Kết thúc -->
+    }
+
+    else
+    {
+        <h1> Trống </h1>
+    }
+
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Dashboard");
+}

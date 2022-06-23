@@ -1,0 +1,42 @@
+﻿@model CAFE_MVC.Models.NGUYENLIEU
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <h2>Details</h2>
+
+    <div>
+        <h4>Chi tiết @Model.TENNL</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TENNL)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TENNL)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SLTON)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SLTON)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_NL }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.KHUVUC>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Khu vực";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+@if (Session["ID_USER"] != null)
+{
+    
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH KHU VỰC HIỆN CÓ</h2>
+    </div>
+
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "Khuvuc", FormMethod.Get))
+        {
+            
+            <div class="row">
+                <div class="">
+                    <input type="text" name="search" class="form-control" placeholder="Tên khu vực">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    if (Model.ToList().Count > 0)
+    {
+        <div class="row row-cols-3 row-cols-md-4">
+            @foreach (var item in Model)
+            {
+
+                <div class="col mb-4 bo">
+                    <div class="card text-center border-dark">
+                        <div class="card-body bg-light border-success">
+                            <h2 class="card-title text-center">@item.TENKV</h2>
+                            <hr />
+                            <br />
+                            @if (item.BANs.Where(s => s.DATMONs.ToList().Count > 0).ToList().Count > 0)
+                            {
+                                <p class="card-text text-center">Số bàn: @item.BANs.ToList().Count() bàn | Trống: @item.BANs.Where(s => s.DATMONs.ToList().Count <= 0).ToList().Count bàn</p>
+                            }
+                            else
+                            {
+                                <p class="card-text text-center">Số bàn: @item.BANs.ToList().Count()</p>
+                            }
+                            <br />
+                            @Html.ActionLink("Xem", "Details", "Khuvuc", new { id = item.ID_KV }, htmlAttributes: new { @class = "btn-lg btn-warning" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="">
+            <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+            <h3 style="padding:10px"> @Html.PagedListPager(Model, page => Url.Action("Index", "Khuvuc", new { page, search = Request.QueryString["search"] }))</h3>
+        </div>
+    }
+    else
+    {
+        <p class="text-danger">Trống</p>
+    }
+}
+else
+{
+    <h1>Bạn chưa đăng nhập</h1>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Home")
+}
+

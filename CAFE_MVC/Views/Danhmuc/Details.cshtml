@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList< CAFE_MVC.Models.SANPHAM>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Chi tiết " + @Model.FirstOrDefault().DANHMUCSP.TENDM ;
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+<div class="alert alert-warning text-lg-center">
+    <h4 class="text-lg-center">CHI TIẾT @Model.FirstOrDefault().DANHMUCSP.TENDM.ToUpper()</h4>
+</div>
+
+<div>
+    
+    <hr />
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "Danhmuc", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="">
+
+                    <input type="text" name="search" class="form-control" placeholder="Tên sản phẩm">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <table class="table table-bordered bg-light">
+        <tr class="thead-dark">
+            <th>
+                TÊN SẢN PHẨM
+            </th>
+            <th>
+                Giá
+            </th>
+            
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TENSP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GIA) VNĐ
+        </td>
+        
+    </tr>
+        }
+
+    </table>
+    <!-- Thêm mã phân trang -->
+
+    <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+    <div class="">
+        <h3 style="padding:10px"> @Html.PagedListPager(Model, page => Url.Action("Index", "Danhmuc", new { page, search = Request.QueryString["search"] }))</h3>
+    </div>
+    <!-- Kết thúc -->
+</div>
+<p>
+  
+</p>

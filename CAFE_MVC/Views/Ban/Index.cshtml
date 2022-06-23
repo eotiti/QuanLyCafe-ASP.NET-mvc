@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.BAN>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Danh sách bàn";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+
+}
+
+@if (Session["ID_USER"] != null)
+{
+    <div class="alert alert-primary text-lg-center">
+        <h2 class="text-lg-center">DANH SÁCH BÀN</h2>
+    </div>
+    <br />
+    <div class="container-sm">
+        @using (Html.BeginForm("Index", "Ban", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="">
+
+                    <input type="text" name="search" class="form-control" placeholder="Tên bàn, khu vực">
+                </div>
+                <div class="">
+                    <input type="submit" name="submit" class="form-control" value="search">
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    if (Model.ToList().Count > 0)
+    {
+        <div class="row row-cols-3 row-cols-md-4">
+
+            @foreach (var item in Model)
+            {
+                if (item.DATMONs.ToList().Count <= 0)
+                {
+                    <div class="col mb-4">
+                        <div class="card border-success">
+                            <div class="card-body border-success" style="background-color: #77f641">
+                                <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                <br />
+                                @if (item.KHUVUC.TENKV.ToString() == null)
+                                {
+                                    <p>Không có khu vực</p>
+                                }
+                                else
+                                {
+                                    <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                }
+
+                                <h5 class="card-text">Trạng thái: <strong class="text-primary">Trống</strong></h5>
+                                @Html.ActionLink("Xem", "Details", "Ban", new { id = item.ID_BAN }, new { @class = "btn btn-secondary" })
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col mb-4">
+                        <div class="card border-danger">
+                            <div class="card-body border-danger" style="background-color:#f86865">
+                                <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                <br />
+                                @if (item.KHUVUC.TENKV.ToString() == null)
+                                {
+                                    <p>Không có khu vực</p>
+                                }
+                                else
+                                {
+                                    <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                }
+
+                                <h5 class="card-text">Trạng thái: <strong class="text-warning">Đang dùng</strong></h5>
+                                @Html.ActionLink("Xem", "Details", "Ban", new { id = item.ID_BAN }, new { @class = "btn btn-secondary" })
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <!-- Thêm mã phân trang -->
+
+        <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+        <div class="">
+            <h3> @Html.PagedListPager(Model, page => Url.Action("Index", "Ban", new { page, search = Request.QueryString["search"] }))</h3>
+        </div>
+        <!-- Kết thúc -->
+    }
+    else
+    {
+        <h1>Trống</h1>
+    }
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Home");
+}

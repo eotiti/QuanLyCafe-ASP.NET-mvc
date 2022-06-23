@@ -1,0 +1,45 @@
+﻿@model CAFE_MVC.Models.KHUVUC
+
+@{
+    ViewBag.Title = "Xoá " + Model.TENKV;
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <div class="alert alert-danger text-lg-center">
+        <h2 class="text-lg-center">XOÁ KHU VỰC</h2>
+    </div>
+
+    <h3 class="text-center">Bạn muốn xoá <strong>@Model.TENKV</strong> ?</h3>
+
+    <div class="text-center">
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Tên khu vực
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TENKV)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xác nhận xoá" class="btn btn-danger" />
+            </div>
+            <br />
+            @Html.ActionLink("Quay lại", "Index")
+        }
+    </div>
+}
+else
+{
+    <p>Bạn chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

@@ -1,0 +1,28 @@
+﻿
+.ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {
+    display: inline;
+    background-color: #e6bb5e;
+}
+
+ul.pagination li a {
+    color: #4adc0c;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: underline;
+    transition: background-color .3s;
+}
+
+    ul.pagination li a.active {
+        background-color: #e6bb5e;
+        color: #f9cc75;
+    }
+
+ul.pagination li a:hover:not(.active) {
+    background-color: #808080;
+}

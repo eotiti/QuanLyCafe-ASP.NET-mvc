@@ -1,0 +1,88 @@
+﻿@model List<CAFE_MVC.Models.BAN>
+
+@{
+    ViewBag.Title = "Chi tiết " + @Model.FirstOrDefault().KHUVUC.TENKV;
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    if (Model.ToList().Count > 0)
+    {
+        var tenkv = Model.FirstOrDefault().KHUVUC.TENKV;
+        
+        <div class="alert alert-warning text-lg-center">
+            <h2 class="text-lg-center">CHI TIẾT @tenkv.ToString()</h2>
+        </div>
+        <div>
+            <hr />
+            <div class="row row-cols-3 row-cols-md-4">
+
+                @foreach (var item in Model)
+                {
+                    if (item.DATMONs.ToList().Count <= 0)
+                    {
+                        <div class="col mb-4">
+                            <div class="card border-success">
+                                <div class="card-body border-success">
+                                    <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                    <br />
+                                    @if (item.KHUVUC.TENKV.ToString() == null)
+                                    {
+                                        <p>Không có khu vực</p>
+                                    }
+                                    else
+                                    {
+                                        <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                    }
+
+                                    <h5 class="card-text">Trạng thái: <strong class="text-success">Trống</strong></h5>
+                                    @Html.ActionLink("Sửa", "Edit", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-secondary" })
+                                    @Html.ActionLink("Xem", "Details", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                                    @Html.ActionLink("Xoá", "Delete", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col mb-4">
+                            <div class="card border-danger">
+                                <div class="card-body border-danger">
+                                    <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                    <br />
+                                    @if (item.KHUVUC.TENKV.ToString() == null)
+                                    {
+                                        <p>Không có khu vực</p>
+                                    }
+                                    else
+                                    {
+                                        <p><strong>@item.KHUVUC.TENKV</strong></p>
+
+                                    }
+
+                                    <h5 class="card-text">Trạng thái: <strong class="text-danger">Đang dùng</strong></h5>
+                                    @Html.ActionLink("Xem", "Details", "QLBan", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+    else
+    {
+        <h1>trống</h1>
+
+    }
+}
+else
+{
+    <p>CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Dashboard")
+}

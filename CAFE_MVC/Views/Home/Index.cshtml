@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+<div class="alert alert-primary text-lg-center">
+    <h1 class="text-lg-center">TRANG CHỦ</h1>
+</div>
+@if (Session["ID_USER"] != null)
+{
+<div class="jumbotron">
+    <h1 class="display-4">CHÀO MỪNG <strong class="text-warning">@Session["FULLNAME"].ToString().ToUpper()</strong> ĐẾN TRANG CHỦ </h1>
+    @if (Session["TYPE"].ToString() == "0")
+    {
+        <p class="lead text-center text-danger"><strong>Chức vụ: Admin</strong></p>
+    }
+    else
+    {
+        <p class="lead text-center text-primary"><strong>Chức vụ: Nhân viên</strong></p>
+    }
+    <hr class="my-4">
+</div>
+}
+else
+{
+    <div class="jumbotron">
+        <h1 class="display-4">CHÀO MỪNG ĐẾN TRANG CHỦ</h1>
+        <p class="lead"></p>
+        <hr class="my-4">
+        <h2> Bạn chưa đăng nhập</h2>
+
+        @Html.ActionLink("Đăng nhập", "Login", "Home", htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+    </div>
+}

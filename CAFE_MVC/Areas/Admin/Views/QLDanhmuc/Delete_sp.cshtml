@@ -1,0 +1,60 @@
+﻿@model CAFE_MVC.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Xoá món";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <div class="alert alert-danger text-lg-center">
+        <h2 class="text-lg-center">XOÁ MÓN CỦA @Model.DANHMUCSP.TENDM.ToUpper()</h2>
+    </div>
+
+    <h3 class="text-center">Bạn muốn xoá @Model.TENSP khỏi @Model.DANHMUCSP.TENDM ?</h3>
+    <div class="text-center">
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Tên sản phẩm
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TENSP)
+            </dd>
+
+            <dt>
+                Giá
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GIA) VNĐ
+            </dd>
+
+            <dt>
+                Danh mục
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DANHMUCSP.TENDM)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+
+            </div>
+        }
+    </div>
+    @Html.ActionLink("Quay lại", "Edit", "QLDanhmuc", new { id = Model.DANHMUCSP.ID_DM }, htmlAttributes: new {})
+}
+else
+{
+    <p>Bạn chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

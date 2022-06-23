@@ -1,0 +1,50 @@
+﻿@model CAFE_MVC.Models.SANPHAM
+
+@{
+    ViewBag.Title = "Chi tiết " + @Model.TENSP;
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+@if (Session["ID_USER"] != null)
+{
+    <div>
+        <div class="alert alert-primary text-lg-center">
+            <h4 class="text-lg-center">CHI TIẾT @Model.TENSP.ToUpper()</h4>
+        </div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.TENSP)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TENSP)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.GIA)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GIA)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DANHMUCSP.TENDM)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DANHMUCSP.TENDM)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Home")
+}

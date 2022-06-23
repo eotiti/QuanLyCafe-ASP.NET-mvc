@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CAFE_MVC.Models.BAN>
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+<div class="container-sm">
+    <table class="table table-bordered bg-light col-11">
+        <tr class="thead-dark">
+            <th>
+                Tên bàn
+            </th>
+            <th>
+                Tên khu vực
+            </th>
+            <th class="">Tuỳ chọn</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TENBAN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KHUVUC.TENKV)
+                </td>
+                <td class="">
+                    @if (item.DATMONs.ToList().Count > 0)
+                    {
+                        @Html.ActionLink("Cập nhật", "Edit_ban", new { id = item.ID_BAN }, htmlAttributes: new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Chi tiết", "Details", "QLBan", new { id = item.ID_BAN }, htmlAttributes: new { @class = "btn btn-warning " })
+                    }
+                    else
+                    {
+                        
+                        @Html.ActionLink("Cập nhật", "Edit_ban", new { id = item.ID_BAN }, htmlAttributes: new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Chi tiết", "Details", "QLBan", new { id = item.ID_BAN }, htmlAttributes: new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Xoá", "Delete_ban", new { id = item.ID_BAN }, htmlAttributes: new { @class = "btn btn-danger" })
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+}
+else
+{
+    <p>BẠN CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("Đăng nhập","Login","Dashboard")
+}

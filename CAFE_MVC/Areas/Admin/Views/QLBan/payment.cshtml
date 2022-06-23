@@ -1,0 +1,56 @@
+﻿@model List<CAFE_MVC.Models.DATMON>
+
+@{
+    ViewBag.Title = "payment";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    double tong=0;
+    <div class="alert alert-danger text-lg-center">
+        <h2 class="text-lg-center">THANH TOÁN</h2>
+    </div>
+
+    <h3 class="text-center">BẠN CÓ CHẮC MUỐN THANH TOÁN ?</h3>
+    <div class="container-sm">
+        <hr />
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tên món</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Thành tiền</th>
+                    <th scope="col">Ngày cập nhật</th>
+                    <th scope="col">Người thêm</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                tong += double.Parse(item.THANHTIEN.ToString());
+                <tbody>
+                    <tr>
+                        <th scope="row">@item.SANPHAM.TENSP</th>
+                        <td>@item.SOLUONG</td>
+                        <td>@item.SANPHAM.GIA</td>
+                        <td>@item.THANHTIEN</td>
+                        <td>@item.NGAYLAP</td>
+                        <td>@item.TAIKHOAN.FULLNAME</td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+        <div class="alert alert-primary text-lg-center">
+            <h4 class="text-lg-center">Tổng tiền: @tong VNĐ</h4>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions no-color">
+                <input type="submit" value="THANH TOÁN" class="btn btn-success" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+}

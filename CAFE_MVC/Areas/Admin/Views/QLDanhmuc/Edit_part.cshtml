@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CAFE_MVC.Models.SANPHAM>
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+<div class="container-sm">
+    <table class="table table-bordered bg-light col-sm-10">
+        <tr class="thead-dark">
+            <th>
+                TÊN MÓN
+            </th>
+            <th>
+                GIÁ
+            </th>
+
+            <th>Tuỳ chọn</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TENSP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GIA)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Cập nhật", "Edit_sp", "QLDanhmuc", new { id = item.ID_SP }, htmlAttributes: new { }) |
+
+                    @Html.ActionLink("Xoá", "Delete_sp", "QLDanhmuc", new { id = item.ID_SP }, htmlAttributes: new { })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}

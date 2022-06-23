@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<CAFE_MVC.Models.BAN>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Chi tiết " + @Model.FirstOrDefault().KHUVUC.TENKV;
+    Layout = "~/Views/Shared/layout_user.cshtml";
+}
+
+@if (Session["ID_USER"] != null)
+{
+    if (Model.ToList().Count > 0)
+    {
+        var tenkv = Model.FirstOrDefault().KHUVUC.TENKV;
+        <div class="alert alert-warning text-lg-center">
+            <h4 class="text-lg-center">CHI TIẾT @tenkv.ToString().ToUpper()</h4>
+        </div>
+
+        <div>
+            <hr />
+            <div class="row row-cols-3 row-cols-md-4">
+
+                @foreach (var item in Model)
+                {
+                    if (item.DATMONs.ToList().Count <= 0)
+                    {
+                        <div class="col mb-4">
+                            <div class="card border-success">
+                                <div class="card-body border-success" style="background-color: #77f641">
+                                    <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                    <hr />
+                                    <br />
+                                    <h5 class="card-text">Trạng thái: <strong class="text-success">Trống</strong></h5>
+                                    @Html.ActionLink("Xem", "Details", "Ban", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col mb-4">
+                            <div class="card border-danger">
+                                <div class="card-body border-danger" style="background-color:#f86865">
+                                    <h4 class="card-title text-lg-center">@item.TENBAN</h4>
+                                    <hr />
+                                    <br />
+                                    <h5 class="card-text">Trạng thái: <strong class="text-danger">Đang dùng</strong></h5>
+                                    @Html.ActionLink("Xem", "Details", "Ban", new { id = item.ID_BAN }, new { @class = "btn btn-warning" })
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <!-- Thêm mã phân trang -->
+
+        <h3>Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount</h3>
+        <div class="">
+            <h3 style="padding:10px"> @Html.PagedListPager(Model, page => Url.Action("Details", "Khuvuc", new { page }))</h3>
+        </div>
+        <!-- Kết thúc -->
+        <br />
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    }
+    else
+    {
+        <h1>trống</h1>
+
+    }
+}
+else
+{
+    <p>CHƯA ĐĂNG NHẬP</p>
+    @Html.ActionLink("ĐĂNG NHẬP", "Login", "Home")
+}

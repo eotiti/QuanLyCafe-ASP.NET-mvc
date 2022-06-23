@@ -1,0 +1,40 @@
+﻿@model CAFE_MVC.Models.DANHMUCSP
+
+@{
+    ViewBag.Title = "Xoá " + Model.TENDM;
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+@if (Session["ID_USER"] != null && Session["TYPE"].ToString() == "0")
+{
+    <h3>Bạn có muốn xoá <strong>@Model.TENDM</strong> ?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Tên danh mục
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TENDM)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Xác nhận xoá" class="btn btn-danger" />
+
+            </div>
+            @Html.ActionLink("Quay lại", "Index")
+        }
+    </div>
+}
+else
+{
+    <p>Chưa đăng nhập</p>
+    @Html.ActionLink("Đăng nhập", "Login", "Dashboard")
+}
