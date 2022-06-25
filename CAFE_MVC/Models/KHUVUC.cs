@@ -19,7 +19,7 @@ namespace CAFE_MVC.Models
         {
             this.BANs = new HashSet<BAN>();
         }
-    
+  
         public int ID_KV { get; set; }
         public string TENKV { get; set; }
     

@@ -9,7 +9,6 @@
     <script src="~/Public/dashboard/dashboard.js"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body style="padding:0px">
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -27,7 +26,6 @@
             }
             else
             {
-
 
             }
 
@@ -48,7 +46,7 @@
                                     </p>
                                 </li>
                                 <li class="nav-item align-bottom badge-info">
-                                    <strong>@Html.ActionLink("Thông tin cá nhân", "Details", "Taikhoan", new { id = Session["ID_USER"] }, htmlAttributes: new { @class = "nav-link active text-dark" })</strong>
+                                    <strong>@Html.ActionLink("Đổi mật khẩu", "Edit", "Taikhoan", new { id = Session["ID_USER"] }, htmlAttributes: new { @class = "nav-link active text-dark" })</strong>
                                 </li>
                                 <li><br /></li>
 
@@ -65,7 +63,7 @@
                                     </p>
                                 </li>
                                 <li class="nav-item align-bottom badge-info">
-                                    @Html.ActionLink("Thông tin cá nhân", "Details", "Taikhoan", new { id=Session["ID_USER"]}, htmlAttributes: new { @class = "nav-link active text-light" })
+                                    @Html.ActionLink("Đổi mật khẩu", "Edit", "Taikhoan", new { id=Session["ID_USER"]}, htmlAttributes: new { @class = "nav-link active text-light" })
                                 </li>
                             }
 
